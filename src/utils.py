@@ -1,9 +1,12 @@
 # python
 
+from block_type import BlockType
 from textnode import TextType, TextNode
 from typing import List
 import textwrap
 import re
+
+HEADING_RE = re.compile(r"^(#{1,6})\s+\S")
 
 
 def markdown_to_blocks(markdown):
@@ -17,6 +20,31 @@ def markdown_to_blocks(markdown):
         blocks.append("\n".join(lines))
 
     return blocks
+
+
+def block_to_block(block: str) -> BlockType:
+    if not block:
+        return BlockType.PARAGRAPH
+
+    if block.startswith("```") and block.endswith("```") and len(block) >= 6:
+        return BlockType.CODE
+
+    if HEADING_RE.match(block):
+        return BlockType.HEADING
+
+    lines: List[str] = block.split("\n")
+
+    if all(line.startswith(">") for line in lines):
+        return BlockType.QUOTE
+
+    if all(line.startswith("- ") for line in lines):
+        return BlockType.UNORDERED_LIST
+
+    for i, line in enumerate(lines, start=1):
+        if not line.startswith(f"{i}. "):
+            return BlockType.PARAGRAPH
+
+    return BlockType.ORDERED_LIST
 
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
