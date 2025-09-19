@@ -1,13 +1,9 @@
 # python
 
-
-from textnode import TextType, TextNode
-
+from file_utilities import sync_static_to_public
 
 def main():
-    textNode = TextNode("My text", TextType.BOLD, "http://google.com")
-    print("HERE I AM")
-    print(textNode)
+    sync_static_to_public()
 
 
 if __name__ == "__main__":
