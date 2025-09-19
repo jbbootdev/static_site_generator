@@ -2,14 +2,15 @@
 import os
 import shutil
 
-from gen_content import generate_page
+from file_utilities import generate_pages_recursive
+
 
 ROOT = os.path.dirname(os.path.dirname(__file__))
 PUBLIC = os.path.join(ROOT, "public")
 STATIC = os.path.join(ROOT, "static")
-CONTENT_MD = os.path.join(ROOT, "content", "index.md")
+CONTENT_DIR = os.path.join(ROOT, "content")
+DEST_DIR = os.path.join(ROOT, "public")
 TEMPLATE = os.path.join(ROOT, "template.html")
-DEST_HTML = os.path.join(PUBLIC, "index.html")
 
 def clean_public():
     if os.path.exists(PUBLIC):
@@ -23,7 +24,7 @@ def copy_static():
 def main():
     clean_public()
     copy_static()
-    generate_page(CONTENT_MD, TEMPLATE, DEST_HTML)
+    generate_pages_recursive(CONTENT_DIR, TEMPLATE, DEST_DIR)
 
 if __name__ == "__main__":
     main()
