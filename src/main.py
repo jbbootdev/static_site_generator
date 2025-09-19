@@ -1,6 +1,7 @@
 # python
 import os
 import shutil
+import sys
 
 from file_utilities import generate_pages_recursive
 
@@ -22,9 +23,10 @@ def copy_static():
     shutil.copytree(STATIC, PUBLIC, dirs_exist_ok=True)
 
 def main():
+    base_path = sys.argv[1] if len(sys.argv) > 1 else "/"
     clean_public()
     copy_static()
-    generate_pages_recursive(CONTENT_DIR, TEMPLATE, DEST_DIR)
+    generate_pages_recursive(CONTENT_DIR, TEMPLATE, DEST_DIR, base_path)
 
 if __name__ == "__main__":
     main()

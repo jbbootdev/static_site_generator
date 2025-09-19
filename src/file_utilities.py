@@ -17,7 +17,7 @@ def copy_recursive(src: str, dest: str):
             shutil.copy2(source_path, destination_path)
             print(f"copied: {destination_path}")
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, base_path):
     content_root = Path(dir_path_content).resolve()
     dest_root = Path(dest_dir_path).resolve()
     template_path = Path(template_path).resolve()
@@ -34,7 +34,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             dest_html.parent.mkdir(parents=True, exist_ok=True)
             print("REL: ", rel)
             print("DEST HTML: ", dest_html)
-            generate_page(md_path, template_path, dest_html)
+            generate_page(md_path, template_path, dest_html, base_path)
 
 
 def sync_static_to_public(src: str="static", dest: str="public"):
