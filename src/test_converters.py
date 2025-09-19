@@ -41,7 +41,6 @@ class TestConverters(unittest.TestCase):
         node = TextNode("This is an image node", TextType.IMAGE)
         html_node = text_node_to_html_node(node)
         self.assertEqual("img", html_node.tag)
-        self.assertEqual(html_node.value, "This is an image node")
 
     def test_paragraphs(self):
         md = """
