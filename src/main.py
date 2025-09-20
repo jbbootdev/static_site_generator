@@ -7,24 +7,23 @@ from file_utilities import generate_pages_recursive
 
 
 ROOT = os.path.dirname(os.path.dirname(__file__))
-PUBLIC = os.path.join(ROOT, "public")
+DOCS_DIR = os.path.join(ROOT, "docs")
 STATIC = os.path.join(ROOT, "static")
 CONTENT_DIR = os.path.join(ROOT, "content")
 DEST_DIR = os.path.join(ROOT, "public")
 TEMPLATE = os.path.join(ROOT, "template.html")
 
-def clean_public():
-    if os.path.exists(PUBLIC):
-        shutil.rmtree(PUBLIC)
-    os.makedirs(PUBLIC, exist_ok=True)
+def clean_docs():
+    if os.path.exists(DOCS_DIR):
+        shutil.rmtree(DOCS_DIR)
+    os.makedirs(DOCS_DIR, exist_ok=True)
 
 def copy_static():
-    # copies static/ into public/
-    shutil.copytree(STATIC, PUBLIC, dirs_exist_ok=True)
+    shutil.copytree(STATIC, DOCS_DIR, dirs_exist_ok=True)
 
 def main():
     base_path = sys.argv[1] if len(sys.argv) > 1 else "/"
-    clean_public()
+    clean_docs()
     copy_static()
     generate_pages_recursive(CONTENT_DIR, TEMPLATE, DEST_DIR, base_path)
 
